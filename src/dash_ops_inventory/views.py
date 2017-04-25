@@ -1,3 +1,5 @@
+from _curses import erasechar
+
 from django.http import JsonResponse
 from django.http import HttpResponseBadRequest
 from .models import Environment, Node, SSHUser
@@ -34,13 +36,17 @@ def serialize_rundeck_node(queryset_filter, domain_type, view_type):
     return data
 
 
-# Rundeck View
+# Node create endpoint
 def save_nodes(request, env_name, node_name, address, user_name):
+    try:
 
-    node = Node(env=Environment.objects.get(name=env_name), name=node_name, primary_address=address,
-              ssh_specific_user=SSHUser.objects.get(login=user_name))
-    node.save()
-    return JsonResponse(node)
+        node = Node(env=Environment.objects.get(name=env_name), name=node_name, primary_address=address,
+                  ssh_specific_user=SSHUser.objects.get(login=user_name))
+        node.save()
+        return JsonResponse({'result':'saved'})
+    except Exception, error:
+        return JsonResponse({'result':error.message})
+
 
 def rundeck_nodes_by_env(request, env_id=None, env_name=None):
     if request.GET.get('domain_type') and request.GET['domain_type'] == 'secondary':
