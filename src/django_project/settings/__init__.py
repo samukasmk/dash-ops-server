@@ -147,20 +147,26 @@ PDNS_DEFAULT_RR_TTL = 3600
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
+# DATABASES = {
+#     #'default': {
+#     #    'ENGINE': 'django.db.backends.mysql',
+#     #    'NAME': 'dash_ops', # 'powerdns_manager',
+#     #    'USER': 'root',
+#     #    'PASSWORD': 'toor',
+#     #    'HOST': '127.0.0.1',
+#     #    'PORT': '3306',
+#     #    'OPTIONS': {
+#     #        'init_command': 'SET foreign_key_checks = 0;',
+#     #    },
+#     #},
+# }
 DATABASES = {
-    #'default': {
-    #    'ENGINE': 'django.db.backends.mysql',
-    #    'NAME': 'dash_ops', # 'powerdns_manager',
-    #    'USER': 'root',
-    #    'PASSWORD': 'toor',
-    #    'HOST': '127.0.0.1',
-    #    'PORT': '3306',
-    #    'OPTIONS': {
-    #        'init_command': 'SET foreign_key_checks = 0;',
-    #    },
-    #},
-}
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
 
+}
 # PowerDNS Manager settings
 # DATABASE_ROUTERS = ['powerdns_manager.routers.PowerdnsManagerDbRouter']
 

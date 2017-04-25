@@ -23,6 +23,6 @@ urlpatterns = [
     url(r'^powerdns/', include('powerdns_manager.urls')),
     url(r'^$',         RedirectView.as_view(url='/admin')),
     # Simple API entries
-    url(r'^api/inventory', include('dash_ops_inventory.urls')),
-    #url(r'^api/powerdns',  include('powerdns_api.urls')),
+    url(r'^api/inventory/', include('dash_ops_inventory.urls')),
+    url(r'^api/powerdns/',  include('powerdns_api.urls')),
 ]

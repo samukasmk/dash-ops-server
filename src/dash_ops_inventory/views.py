@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.http import HttpResponseBadRequest
-from .models import Environment, Node
+from .models import Environment, Node, SSHUser
 
 
 # JSON Serializers
@@ -35,6 +35,13 @@ def serialize_rundeck_node(queryset_filter, domain_type, view_type):
 
 
 # Rundeck View
+def save_nodes(request, env_name, node_name, address, user_name):
+
+    node = Node(env=Environment.objects.get(name=env_name), name=node_name, primary_address=address,
+              ssh_specific_user=SSHUser.objects.get(login=user_name))
+    node.save()
+    return JsonResponse(node)
+
 def rundeck_nodes_by_env(request, env_id=None, env_name=None):
     if request.GET.get('domain_type') and request.GET['domain_type'] == 'secondary':
         domain_type = 'secondary'
@@ -53,7 +60,8 @@ def rundeck_nodes_by_env(request, env_id=None, env_name=None):
     elif env_name is not None:
         queryset_filter['env__name'] = env_name
     else:
-        raise HttpResponseBadRequest('{"error": "This endpoint requires (env_id or env_name) params to properly works"}')
+        raise HttpResponseBadRequest(
+            '{"error": "This endpoint requires (env_id or env_name) params to properly works"}')
 
     json_dict = serialize_rundeck_node(queryset_filter, domain_type, view_type)
     return JsonResponse(json_dict, json_dumps_params={'sort_keys': True})
