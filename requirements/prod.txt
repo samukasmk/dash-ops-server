@@ -1,0 +1,3 @@
+-r commom.txt
+
+uWSGI==2.0.14
