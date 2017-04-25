@@ -15,7 +15,7 @@ urlpatterns = [
         name='rundeck_nodes_by_env_name'),
     url(r'node/create/(?P<env_name>[a-zA-Z0-9\.\-\_]*)/(?P<node_name>[a-zA-Z0-9\.\-\_]*)/(?P<address>[a-zA-Z0-9\.\-\_]*)/(?P<user_name>[a-zA-Z0-9\.\-\_]*)/$',
         save_nodes,
-        name='rundeck_nodes_by_env_name'),
+        name='create_node'),
     ### ACCEPTABLED GET PARAMS
     # .../?domain_type=primary (default)
     # .../?domain_type=secondary
