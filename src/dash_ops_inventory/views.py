@@ -39,9 +39,14 @@ def serialize_rundeck_node(queryset_filter, domain_type, view_type):
 # Node create endpoint
 def save_nodes(request, env_name, node_name, address, user_name):
     try:
+        env = Environment.objects.get(name=env_name)
+        node = Node.objects.get(env=env, name=node_name)
+        if not node:
+            node = Node(env=env, name=node_name)
 
-        node = Node(env=Environment.objects.get(name=env_name), name=node_name, primary_address=address,
-                  ssh_specific_user=SSHUser.objects.get(login=user_name))
+        node.primary_address = address
+        node.ssh_specific_user = SSHUser.objects.get(login=user_name)
+
         node.save()
         return JsonResponse({'result':'saved'})
     except Exception, error:
