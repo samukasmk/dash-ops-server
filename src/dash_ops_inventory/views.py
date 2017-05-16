@@ -40,8 +40,10 @@ def serialize_rundeck_node(queryset_filter, domain_type, view_type):
 def save_nodes(request, env_name, node_name, address, user_name):
     try:
         env = Environment.objects.get(name=env_name)
-        node = Node.objects.get(env=env, name=node_name)
-        if not node:
+
+        try:
+            node = Node.objects.filter(env=env, name=node_name)
+        except Node.DoesNotExist:
             node = Node(env=env, name=node_name)
 
         node.primary_address = address
