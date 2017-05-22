@@ -42,7 +42,7 @@ def save_nodes(request, env_name, node_name, address, user_name):
         env = Environment.objects.get(name=env_name)
 
         try:
-            node = Node.objects.filter(env=env, name=node_name)
+            node = Node.objects.get(env=env, name=node_name)
         except Node.DoesNotExist:
             node = Node(env=env, name=node_name)
 
