@@ -62,7 +62,7 @@ def save_nodes(request, env_name, node_name, address, user_name):
         return JsonResponse({'result':error.message})
 
 
-def rundeck_nodes_by_env(request, env_id=None, env_name=None, node_type=None):
+def rundeck_nodes_by_env(request, env_id=None, env_name=None):
     if request.GET.get('domain_type') and request.GET['domain_type'] == 'secondary':
         domain_type = 'secondary'
     else:
@@ -73,6 +73,11 @@ def rundeck_nodes_by_env(request, env_id=None, env_name=None, node_type=None):
     else:
         view_type = 'bydomain'
 
+    if request.GET.get('name_type') and request.GET['name_type'] == 'fqdn':
+        name_type = 'fqdn'
+    else:
+        name_type = 'default'        
+        
     queryset_filter = {}
 
     if env_id is not None:
