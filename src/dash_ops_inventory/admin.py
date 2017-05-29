@@ -12,6 +12,7 @@ class NodeAdmin(admin.ModelAdmin):
     list_display = ['name', 'desc', 'primary_address', 'secondary_address', 'env']
     list_filter = ['env', 'tags']
     filter_horizontal = ['tags']
+    search_fields = ['name', 'desc', 'primary_address', 'secondary_address']
 
 
 @admin.register(NodeTag)
